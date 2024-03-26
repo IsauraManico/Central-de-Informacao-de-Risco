@@ -1,6 +1,12 @@
 # CAN-CIR ( CENTRAL DE INFORMAÇÃO DE RISCO )
 
 
+TECNOLOGIAS USADAS :
+
+Spring boot - Back-end
+JSF - fRONT -END
+Html,css,js
+
 Objectivo : Criar um sistema de partilha de informações de risco entre agentes economicos ( bancos, seguradoras, lojas varejistas e,t,c )
 
 
@@ -19,3 +25,6 @@ Por exemplo, instituições financeiras podem compartilhar informações sobre c
 São sistemas comumente usados no setor financeiro para compartilhar informações de crédito entre as instituições financeiras. Os bancos e outras entidades podem fornecer informações sobre a saúde financeira de seus clientes, como histórico de pagamentos, dívidas pendentes e outros fatores relevantes para avaliar o risco de crédito.  
 
 Esses sistemas permitem que as organizações se protejam mutuamente, compartilhando informações sobre as mais recentes informações de risco  e medidas de proteção.
+
+
+
