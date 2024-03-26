@@ -1,0 +1,230 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+
+    <p:dialog
+
+
+        header="Novo Cliente"
+        widgetVar="produto_cadastrar_dlg" 
+        minHeight="120" 
+        width="1124" 
+        showEffect="fade" 
+        modal="true">
+        <p:panel id="produto_cadastrar_id">
+
+
+            <div style="margin-top: 10px;">
+
+
+                <p:fieldset legend="Dados Pessoais">
+                    <p:panelGrid columns="4">
+                        <p:outputLabel value="Nome Completo"/>
+                        <p:inputText 
+                            id="nome"
+                            value="#{clienteCadastrarBean.pessoa.nome}"
+                            />
+
+                        <p:outputLabel value="Data de nascimento"/>
+                        <p:calendar 
+                            showOn="button"
+                            maxdate="01/01/2050"
+                            value="#{clienteCadastrarBean.pessoa.dataNascimento}"
+                            />
+
+                        <p:outputLabel value="Número do BI"/>
+                        <p:inputText 
+                            id="bi"
+                            value="#{clienteCadastrarBean.pessoa.bi}"
+                            />
+
+                        <p:outputLabel value="Genero"/>
+                        <p:selectOneMenu
+                            converter="objectConverter"
+                            value="#{clienteCadastrarBean.pessoa.fkGenero}">
+                            <f:selectItems 
+                                var="genero" 
+                                value="#{generoCache.generoLista}" 
+                                itemLabel="#{genero.descricao}" 
+                                itemValue="#{genero}"
+                                />
+                        </p:selectOneMenu>
+
+
+
+                        <p:outputLabel value="Estado Civil"/>
+                        <p:selectOneMenu value="#{clienteCadastrarBean.pessoa.fkEstadoCivil}" 
+                                         converter="objectConverter">
+                            <f:selectItems 
+                                var="estadoCivil" 
+                                value="#{estadoCivilCache.estadoCilvilLista}" 
+                                itemLabel="#{estadoCivil.descricao}" 
+                                itemValue="#{estadoCivil}"
+                                />
+                        </p:selectOneMenu>
+
+                        <p:outputLabel value="Nacionalidade"/>
+                        <p:selectOneMenu value="#{clienteCadastrarBean.pessoa.fkNacionalidade}" 
+                                         converter="objectConverter">
+                            <f:selectItems 
+                                var="nacionalidade" 
+                                value="#{nacionalidadeCache.nacionalidadeLista}" 
+                                itemLabel="#{nacionalidade.descricao}" 
+                                itemValue="#{nacionalidade}"
+                                />
+                        </p:selectOneMenu>
+
+                        <p:outputLabel value="Email"/>
+                        <p:inputText 
+                            id="email"
+                            value="#{clienteCadastrarBean.pessoa.bi}"
+                            />
+
+                        <p:outputLabel value="Telefone"/>
+                        <p:inputText 
+                            id="telefone"
+                            value="#{clienteCadastrarBean.pessoa.bi}"
+                            />
+
+
+                        <p:panelGrid columns="2">
+                            <p:outputLabel value="Pais"/>
+                            <p:selectOneMenu value="#{localidadeCache.paisSelecionado}">
+                                <p:ajax 
+                                    event="itemSelect"
+                                    listener="#{localidadeCache.carregarProvinciasByPaisSelecionado()}"
+                                    update="provincias_id"
+                                    />
+                                <f:selectItems
+                                    value="#{localidadeCache.listaDePaises}"
+                                    var="pais" 
+                                    itemLabel="#{pais.designacao}" 
+                                    itemValue="#{pais.pkLocalidade}"
+                                    />
+
+
+                            </p:selectOneMenu>
+                            <p:outputLabel value="Província"/>
+
+                            <p:selectOneMenu 
+                                id="provincias_id"
+                                value="#{localidadeCache.provinciaSelecionada}">
+                                <f:selectItems
+
+                                    value="#{localidadeCache.listaDeProvincias}"
+                                    var="provincia" 
+                                    itemLabel="#{provincia.designacao}" 
+                                    itemValue="#{provincia.pkLocalidade}"
+                                    />
+                                <p:ajax 
+                                    listener="#{localidadeCache.carregarMunicipioByProvinciaSelecionado()}"
+                                    update="municipio_id"
+                                    />
+                            </p:selectOneMenu>
+
+                            <p:outputLabel value="Município"/>
+
+                            <p:selectOneMenu 
+                                id="municipio_id"
+                                value="#{clienteCadastrarBean.pessoa.fkLocalidade}"
+                                converter="objectConverter">
+                                <f:selectItems
+
+                                    value="#{localidadeCache.listaDeMunicipios}"
+                                    var="municipio" 
+                                    itemLabel="#{municipio.designacao}" 
+                                    itemValue="#{municipio}"
+                                    />
+
+                            </p:selectOneMenu>
+                        </p:panelGrid>
+
+                    </p:panelGrid>
+                </p:fieldset>
+
+                <p:fieldset legend="Historico Profissional">
+                    <p:panelGrid columns="6">
+                        <p:outputLabel value="Nome da Empresa"/>
+                        <p:inputText 
+                            id="empresa_id"
+                            value="#{clienteCadastrarBean.pessoa.nome}"
+                            />
+
+                        <p:outputLabel value="Faixa Salarial"/>
+                        <p:selectOneMenu
+                            converter="objectConverter"
+                            value="#{clienteCadastrarBean.pessoa.fkGenero}">
+                            <f:selectItems 
+                                var="genero" 
+                                value="#{generoCache.generoLista}" 
+                                itemLabel="#{genero.descricao}" 
+                                itemValue="#{genero}"
+                                />
+                        </p:selectOneMenu>
+
+                        <p:outputLabel value="Data de Início"/>
+                        <p:calendar 
+                            showOn="button"
+                            maxdate="01/01/2050"
+                            value="#{clienteCadastrarBean.pessoa.dataNascimento}"
+                            />
+
+                        <p:outputLabel value="Data de Fim"/>
+                        <p:calendar 
+                            showOn="button"
+                            maxdate="01/01/2050"
+                            value="#{clienteCadastrarBean.pessoa.dataNascimento}"
+                            />
+
+
+                        <p:outputLabel value="Profissão"/>
+                        <p:selectOneMenu
+                            converter="objectConverter"
+                            value="#{clienteCadastrarBean.pessoa.fkGenero}">
+                            <f:selectItems 
+                                var="genero" 
+                                value="#{generoCache.generoLista}" 
+                                itemLabel="#{genero.descricao}" 
+                                itemValue="#{genero}"
+                                />
+                        </p:selectOneMenu>
+
+              
+
+
+
+
+                    </p:panelGrid>
+                </p:fieldset>
+
+                <br/>
+
+                <p:panelGrid columns="2">
+                    <p:commandButton 
+                        actionListener="#{clienteCadastrarBean.salvar()}"
+                        value="Salvar"
+                        />
+
+                    <p:commandButton 
+                        action="menu_principal?faces-redirect=true"
+                        value="Sair"
+                        />
+                </p:panelGrid>
+
+            </div>
+
+        </p:panel>
+
+
+
+
+
+    </p:dialog>
+
+
+</ui:composition>

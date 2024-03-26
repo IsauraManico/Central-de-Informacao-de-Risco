@@ -1,0 +1,42 @@
+<ui:composition 
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:p="http://primefaces.org/ui"
+    >
+
+    <p:ajaxStatus 
+        onstart="PF('statusDialog').show()" 
+        onsuccess="PF('statusDialog').hide()"
+        onerror="PF('statusDialog').hide()"
+        />
+    <p:dialog 
+        appendTo="@(body)"
+        widgetVar="statusDialog" 
+        modal="true"
+        draggable="false" 
+        closable="false" 
+        resizable="false"
+        showHeader="false"
+        style="
+            background:transparent; 
+            box-shadow: none !important; 
+            border: none !important;
+            width: 100%;
+            "
+        >
+        <!--name="load.gif"--> 
+        <h:graphicImage 
+            library="images" 
+            name="spinner.gif" 
+            style="
+                background: transparent; 
+                box-shadow: none !important; 
+                border: none !important
+                margin-top: 15px  !important;
+                margin-left: 15px  !important;
+                z-index: 1;
+                "
+            />
+    </p:dialog>
+</ui:composition>

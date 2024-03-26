@@ -1,0 +1,157 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+
+    <p:dialog
+
+        rendered="#{clienteEditarBean.clienteSelecionado ne null}"
+        header="Editar Cliente"
+        widgetVar="editar_cliente_dlg" 
+        minHeight="50" 
+        width="750" 
+        showEffect="fade" 
+        modal="true">
+        <p:panel id="editar_client_id">
+            <p:outputLabel value="Cliente a editar #{clienteEditarBean.clienteSelecionado.fkPessoa.nome}"/>
+            
+            
+            <p:fieldset legend="Dados Pessoais">
+                <p:panelGrid columns="4">
+                    <p:outputLabel value="Nome Completo"/>
+                    <p:inputText 
+                        id="nome"
+                        value="#{clienteEditarBean.clienteSelecionado.fkPessoa.nome}"
+                        />
+
+                    <p:outputLabel value="Data de nascimento"/>
+                    <p:calendar 
+                        showOn="button"
+                        maxdate="01/01/2020"
+                        value="#{clienteEditarBean.clienteSelecionado.fkPessoa.dataNascimento}"
+                        />
+
+                    <p:outputLabel value="Número do BI"/>
+                    <p:inputText 
+                        id="bi"
+                        value="#{clienteEditarBean.clienteSelecionado.fkPessoa.bi}"
+                        />
+
+                    <p:outputLabel value="Sexo"/>
+                    <p:selectOneMenu
+                        converter="objectConverter"
+                        value="#{clienteEditarBean.clienteSelecionado.fkPessoa.fkSexo}">
+                        <f:selectItems 
+                            var="sexo" 
+                            value="#{sexoCache.sexoLista}" 
+                            itemLabel="#{sexo.designacao}" 
+                            itemValue="#{sexo}"
+                            />
+
+                        <p:ajax 
+                            event="itemSelect"                       
+                            update="main"
+                            />
+                    </p:selectOneMenu>
+
+
+
+                    <p:outputLabel value="Estado Civil"/>
+                    <p:selectOneMenu value="#{clienteEditarBean.clienteSelecionado.fkPessoa.fkEstadoCivil}" 
+                                     converter="objectConverter">
+                        <f:selectItems 
+                            var="estadoCivil" 
+                            value="#{estadoCivilCache.estadoCilvilLista}" 
+                            itemLabel="#{estadoCivil.designacao}" 
+                            itemValue="#{estadoCivil}"
+                            />
+                    </p:selectOneMenu>
+
+                    <!-- comment
+
+                     <p:outputLabel value="Email"/>
+                     <p:inputText id="email" 
+                                  value="{clienteEditarBean.clienteSelecionado.fkPessoa.email}"
+                                  />
+                    -->
+
+                </p:panelGrid>
+            </p:fieldset>
+
+
+            <p:fieldset legend="Endereço">
+                <p:panelGrid columns="2">
+                    <p:outputLabel value="Pais"/>
+                    <p:selectOneMenu value="#{localidadeCache.paisSelecionado}">
+                        <p:ajax 
+                            event="itemSelect"
+                            listener="#{localidadeCache.carregarProvinciasByPaisSelecionado()}"
+                            update="provincias_id"
+                            />
+                        <f:selectItems
+                            value="#{localidadeCache.listaDePaises}"
+                            var="pais" 
+                            itemLabel="#{pais.designacao}" 
+                            itemValue="#{pais.pkLocalidade}"
+                            />
+
+
+                    </p:selectOneMenu>
+                    <p:outputLabel value="Província"/>
+
+                    <p:selectOneMenu 
+                        id="provincias_id"
+                        value="#{localidadeCache.provinciaSelecionada}">
+                        <f:selectItems
+
+                            value="#{localidadeCache.listaDeProvincias}"
+                            var="provincia" 
+                            itemLabel="#{provincia.designacao}" 
+                            itemValue="#{provincia.pkLocalidade}"
+                            />
+                        <p:ajax 
+                            listener="#{localidadeCache.carregarMunicipioByProvinciaSelecionado()}"
+                            update="municipio_id"
+                            />
+                    </p:selectOneMenu>
+
+                    <p:outputLabel value="Município"/>
+
+                    <p:selectOneMenu 
+                        id="municipio_id"
+                        value="#{clienteEditarBean.clienteSelecionado.fkPessoa.fkLocalidade}"
+                        converter="objectConverter">
+                        <f:selectItems
+
+                            value="#{localidadeCache.listaDeMunicipios}"
+                            var="municipio" 
+                            itemLabel="#{municipio.designacao}" 
+                            itemValue="#{municipio}"
+                            />
+
+                    </p:selectOneMenu>
+                </p:panelGrid>
+                <p:panelGrid columns="3">
+                <p:commandButton 
+                    actionListener="#{clienteCadastrarBean.salvar()}"
+                    value="Salvar"
+                    styleClass="rounded-button ui-button-help"
+                    />
+              
+            
+            </p:panelGrid>
+            </p:fieldset>
+        </p:panel>
+
+
+
+
+
+    </p:dialog>
+
+
+</ui:composition>

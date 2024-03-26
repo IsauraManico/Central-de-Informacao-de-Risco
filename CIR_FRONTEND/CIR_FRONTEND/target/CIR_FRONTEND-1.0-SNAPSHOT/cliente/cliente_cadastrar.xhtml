@@ -1,0 +1,324 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template=".././template/principal.xhtml"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:define name="css">
+
+
+    </ui:define>
+
+
+
+
+    <ui:define name="corpo">
+
+        <div style="margin-top: 120px;">
+
+            <br/>
+
+
+            <div class="box box-primary">
+                <div class="box-header with-border">
+
+
+                    <div class="card crud-demo">
+                        <p:growl id="messages" showDetail="true"/>
+
+                        <p:toolbar>
+                            <p:toolbarGroup>
+
+
+
+                                <p:commandButton
+
+                                    value="Novo Cliente"
+                                    update="main:produto_cadastrar_id"
+                                    actionListener="#{clienteEditarBean.setClienteSelecionado(cliente)}"
+                                    title="Cadastrar Produto"
+                                    style="border: none"
+                                    icon="pi pi-plus" styleClass="btn-primary"
+                                    onclick="PF('produto_cadastrar_dlg').show()"
+                                    >
+
+                                </p:commandButton>
+
+                            </p:toolbarGroup>
+
+                            <p:toolbarGroup align="right">
+
+                                <p:commandButton 
+
+                                    rendered="true"
+                                    onclick="target = '_blank'"
+                                    action="#{produtoCadastrarBean.salvar()}" 
+                                    value="PDF" icon="pi pi-print" styleClass="ui-button-danger" ajax="false"
+                                    style="margin-right: .5rem"
+                                    >
+
+                                </p:commandButton>
+
+                                <p:commandButton 
+                                    rendered="true"
+                                    action="#{produtoCadastrarBean.salvar()}" 
+                                    value="Exel" icon="pi pi-print" styleClass="ui-button-success" ajax="false">
+                                </p:commandButton>
+                            </p:toolbarGroup>
+
+
+                        </p:toolbar>
+
+
+
+                        <p:panel  style="margin: 4px 0;"  >
+                            <div class="ui-g ui-fluid">
+                                <div class="ui-g-3">
+                                    <p:outputLabel  value="Categoria"/>
+
+
+                                    <p:selectOneMenu
+
+
+
+                                        value="#{produtoListarBean.categoriaRecebida}"
+
+                                        autoWidth="false"
+                                        filter="true"
+                                        filterMatchMode="custom"
+
+                                        touchable="true"
+                                        >
+                                        <f:selectItem itemValue="-1"  itemLabel="Todos"  />
+                                        <f:selectItems 
+                                            var="categoria" 
+                                            value="#{categoriaCache.categoriaLista}" 
+                                            itemLabel="#{categoria.designacao}" 
+                                            itemValue="#{categoria.pkCategoria}"
+                                            />
+
+
+                                    </p:selectOneMenu>
+                                </div>
+
+                                <div class="ui-g-3">
+                                    <p:outputLabel  value="Data de Pagamento"/>
+                                    <p:datePicker
+                                        touchable="true"
+                                        value="#{produtoListarBean.dataPagamento}"
+                                        >
+
+
+                                    </p:datePicker>
+
+                                </div> 
+
+                                <div class="ui-g-3">
+                                    <p:outputLabel  value="Estado"/>
+                                    <p:selectOneMenu
+                                        filter="true"
+                                        filterMatchMode="custom"
+
+                                        touchable="true"
+                                        value="#{produtoListarBean.estado}"
+                                        autoWidth="false"
+                                        >
+                                        <f:selectItem itemValue="-1"  itemLabel="Todos"  />
+                                        <f:selectItem itemValue="1"  itemLabel="Activo"  />
+                                        <f:selectItem itemValue="0"  itemLabel="Desativo"  />
+
+
+                                    </p:selectOneMenu>
+                                </div>            
+
+                                <div class="ui-g-3">
+                                    <p:outputLabel  value="."/>
+                                    <p:commandButton value="Listar Produtos "
+                                                     rendered="true"
+                                                     action="#{produtoListarBean.findAllProdutoByCategoriaAndDataPagamentoAndEstado()}"
+                                                     update="dt_produto_visualizar_id"
+                                                     icon="pi pi-list" styleClass="btn-primary"
+                                                     >
+
+                                    </p:commandButton>
+                                </div>
+                            </div>  
+                        </p:panel>
+
+                        <br/>
+                        <br/>
+
+                        <p:dataTable id="dt_produto_visualizar_id" 
+                                     var="produto" value="#{produtoListarBean.listaDeProdutos}"
+                                     paginator="true" rows="5"
+                                     paginatorPosition="bottom"
+                                     selection=""
+                                     rowKey=""
+                                     onRowClick=" PF('dlg').show()"                
+                                     >
+
+                            <f:facet name="header">
+                                <div class="table-crud-header">
+                                    <span style="font-weight: bold; display: block;">
+                                        <h:outputText   style="color: #3189ec" value="Total De Registros : #{produtoListarBean.listaDeProdutos.size()}"/>
+                                    </span>
+
+                                    <span class="filter-container ui-input-icon-left">
+                                        <i class="pi pi-search"></i>
+                                        <p:inputText id="globalFilter" onkeyup="PF('dtBolseiros').filter()" placeholder="Pesquisar..."/>
+                                    </span>
+
+                                </div>
+                            </f:facet>
+
+
+                            <p:column style=""
+                                      headerText="Id" 
+                                      sortBy=""
+                                      >
+                                <h:outputText value="#{produto.pkProduto}" />
+                            </p:column>
+
+                            <p:column style=""
+                                      headerText="Designação" 
+                                      sortBy=""
+                                      >
+                                <h:outputText value="#{produto.designacao}" />
+                            </p:column>
+
+                            <p:column 
+                                headerText="Tempo de Pagamento" 
+                                sortBy=""
+                                >
+                                <h:outputText value="#{produto.fkModalidadePagemento.designacao}">
+                                    <f:convertDateTime pattern="dd-MM-yyyy"/>
+
+                                </h:outputText>
+                            </p:column>
+
+                            <p:column 
+                                headerText="Taxa de juros" 
+                                sortBy=""
+                                >
+                                <h:outputText value="#{produto.taxaJuro}" />
+                            </p:column>
+
+                            <p:column 
+                                headerText="Categoria" 
+                                sortBy=""
+                                >
+                                <h:outputText value="#{produto.fkCategoria.designacao}" />
+                            </p:column>
+
+                            <p:column 
+                                headerText="Data de Cadastro" 
+                                sortBy=""
+                                >
+                                <h:outputText value="#{produto.dataCadastro}">
+
+                                    <f:convertDateTime pattern="dd-MM-yyyy"/>
+
+                                </h:outputText>
+                            </p:column>
+
+
+                            <p:column 
+                                headerText="Estado" 
+                                sortBy=""
+                                >
+                                <h:outputText style="color:#{produto.estado eq true ? 'green' : 'red' }"
+                                              value="#{produto.estado eq true ? 'activo' : 'inativo' }" />
+                            </p:column>
+
+                            <p:column 
+                                headerText="Ações"
+                                style="margin: 60px; "
+
+
+                                >
+
+                                <p:commandButton
+                                    rendered="#{cliente.estado}"
+                                    update="main:editar_client_id"
+                                    actionListener="#{clienteEditarBean.setClienteSelecionado(cliente)}"
+                                    title="Editar Cliente"
+                                    icon="pi pi-pencil"
+                                    onclick="PF('editar_cliente_dlg').show()"
+                                    >
+
+                                </p:commandButton>
+
+
+                                <p:commandButton
+                                    rendered="#{cliente.estado}"
+                                    update="main"
+                                    actionListener="#{clienteListarBean.clienteDesativar(cliente)}"
+                                    title="Desativar Cliente"
+                                    icon="pi pi-trash"
+                                    styleClass="ui-button-danger"
+                                    >
+                                    <p:confirm
+                                        header="Confirmation" 
+                                        message="Tem certeza que deseja desativar esta conta?"
+                                        icon="pi pi-info-circle"/>
+                                </p:commandButton>
+
+                                <p:commandButton
+                                    rendered="#{!cliente.estado}"
+                                    update="main"
+                                    actionListener="#{clienteListarBean.clienteActivar(cliente)}"
+                                    title="Activar Cliente"
+                                    styleClass="ui-button-success"
+                                    icon="pi pi-check-square"
+                                    >
+                                    <p:confirm 
+                                        header="Confirmation" 
+                                        message="Tem certeza que deseja ativar esta conta?"
+                                        icon="pi pi-exclamation-triangle"
+                                        />
+                                </p:commandButton>
+
+
+
+                                <p:confirmDialog global="true" showEffect="fade" hideEffect="fade" responsive="true" width="350">
+                                    <p:commandButton value="Não" 
+                                                     type="button" 
+                                                     style="color: red"
+                                                     styleClass="ui-confirmdialog-no ui-button-flat"/>
+                                    <p:commandButton value="Sim" 
+                                                     type="button" 
+                                                     styleClass="ui-confirmdialog-yes" 
+                                                     />
+                                </p:confirmDialog>
+
+
+                            </p:column>
+
+
+                        </p:dataTable>
+                        <p:dialog 
+                            width="25%"
+                            resizable="false"
+                            header="Opções" 
+                            widgetVar="dlg"
+                            >
+
+                        </p:dialog>
+
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+
+
+        <ui:include src="dialog/cliente_cadastrar.xhtml"/>
+    </ui:define>
+
+
+
+</ui:composition>

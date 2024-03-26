@@ -1,0 +1,160 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+
+
+      xmlns:p="http://primefaces.org/ui">
+
+    <h:head>
+        <title>Facelet Title</title>
+
+        <h:outputStylesheet library="css" name="dashboard.css"/>
+
+
+
+
+        <style>
+
+            .custom-tiered-menu {
+
+                background: white;
+                border : none;
+                height: 400px;
+                width: 400px;
+                border-radius: 1rem;
+            }
+
+            .custom-tiered-menu:hover {
+
+            }
+
+            .custom-tiered-menu .ui-menuitem-text:hover {
+                background-color: transparent !important;
+
+
+            }
+
+            .custom-tiered-menu .ui-menuitem-text {
+
+                font-size: 1.3rem;
+                margin-left: 3rem;
+                transition: all 300ms ease;
+                margin-top:10px;
+
+            }
+
+            .custom-tiered-menu .ui-menuitem-icon {
+
+
+            }
+
+        </style>
+
+    </h:head>
+    <h:body>
+
+        <h:form id="main" enctype="multipart/form-data">
+            <div style="width: 100%; height: 20px; background-color: blue; color: white">
+
+                <ui:insert name="topo"> 
+
+                    <nav>
+
+                        <div class="container">
+                            <h:graphicImage library="images" name="logo_cir.png" styleClass="logo"/>
+                            <div class="search-bar">
+
+
+                                <input type="search" placeholder="Pesquisar"/>
+                            </div>
+                            <div class="profile-area" >
+
+                                <div class="profile">
+                                    <div class="profile-photo">
+                                        <h:graphicImage library="images" name="profile.jpeg"/>
+
+                                    </div>
+                                    <h5> Yuri Domingos </h5>
+                                    <span class="material-icons-sharp">expand_more</span>
+                                </div>
+                                <button id="menu-btn">
+                                    <span class="material-icons-sharp">menu </span>
+                                </button>
+                            </div>
+
+                        </div>
+                    </nav>
+
+
+
+                </ui:insert>
+
+            </div>
+
+            <aside  style=" width: 22%; margin-top: 120px; float: left">
+
+
+                <ui:insert name="menu-lateral">
+                    <p:tieredMenu style="width:320px" styleClass="custom-tiered-menu">
+                        <p:menuitem value="Dashboard" />
+                        <p:submenu label="Operadores Económicos" >                              
+                            <p:menuitem value="Novo Operador"/>
+                            <p:menuitem value="Listar Operador"/>
+                        </p:submenu>
+                        <p:submenu label="Clientes"  >    
+                            <p:menuitem styleClass="submenu" url="../cliente/cliente_cadastrar.xhtml?faces-redirect=true" value="Novo Cliente" />
+                            <p:menuitem url="../cliente/cliente_visualizar.xhtml?faces-redirect=true" value="Listar Cliente"/>
+                        </p:submenu>
+                        <p:submenu label="Produtos"   >
+
+                            <p:menuitem url="../produto/produto_cadastrar.xhtml" value="Novo Produto"/>
+                            <p:menuitem url="../produto/produto.xhtml" value="Visualizar Produto"/>
+
+                        </p:submenu>
+                        <p:submenu label="Análise e Classificação Risco" >
+                            <p:submenu label="Ánalise de Regressão"/>
+                            <p:menuitem value="Classificação de Dados"/>
+                        </p:submenu>
+                        <p:submenu label="Amortizações" >
+                            <p:submenu label="Nova Amortização"/>
+                            <p:menuitem value="Lista Amortização"/>
+                        </p:submenu>
+                        <p:submenu label="Auditorias" >
+                            <p:submenu label="Nova Auditoria"/>
+                            <p:menuitem value="Listar Auditoria"/>
+                        </p:submenu>
+
+                    </p:tieredMenu>
+
+
+
+                </ui:insert>
+
+
+            </aside>
+
+
+            <section style="width: 80%; float: right; margin-left:-120px;">
+                <p:growl id="msg" showDetail="true" />
+                <ui:insert name="corpo"> Corpo </ui:insert>
+
+
+            </section>
+
+            <div style="background-color: gree; position: absolute; bottom: 0; width: 100%">
+
+                <ui:insert name="fundo"> Lateral </ui:insert>
+
+
+            </div>
+            <ui:include src="loader.xhtml"/>
+
+
+        </h:form>
+
+    </h:body>
+</html>
+
