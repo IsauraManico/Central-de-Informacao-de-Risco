@@ -1,11 +1,13 @@
-# CAN-CIR ( CENTRAL DE INFORMAÇÃO DE RISCO )
+# CIR ( SISTEMA CENTRAL DE INFORMAÇÃO DE RISCO )
 
 
-TECNOLOGIAS USADAS :
+TECNOLOGIAS USADAS no projeto :
 
-Spring boot - Back-end
-JSF - fRONT -END
-Html,css,js
+Spring boot - Back-end  
+
+
+JSF -Html,css,js - No  FRONT -END
+
 
 Objectivo : Criar um sistema de partilha de informações de risco entre agentes economicos ( bancos, seguradoras, lojas varejistas e,t,c )
 
